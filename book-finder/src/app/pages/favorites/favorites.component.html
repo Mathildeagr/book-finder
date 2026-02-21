@@ -1,0 +1,30 @@
+<div class="favorites-page">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">
+      <i class="bi bi-star-fill text-warning me-2"></i>Mes favoris
+      <span class="badge bg-warning text-dark ms-2">{{ favoritesService.count() }}</span>
+    </h2>
+    <button class="btn btn-outline-danger btn-sm" (click)="clearAll()">
+      <i class="bi bi-trash me-1"></i>Tout supprimer
+    </button>
+  </div>
+
+  @if (favoritesService.favorites().length === 0) {
+    <div class="text-center py-5">
+      <i class="bi bi-star display-1 text-muted mb-3 d-block"></i>
+      <h4 class="text-muted">Aucun favori pour le moment</h4>
+      <p class="text-muted">Ajoutez des livres depuis la recherche pour les retrouver ici.</p>
+      <a routerLink="/search" class="btn btn-primary mt-2">
+        <i class="bi bi-search me-1"></i>Aller à la recherche
+      </a>
+    </div>
+  } @else {
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+      @for (fav of favoritesService.favorites(); track fav.key) {
+        <div class="col">
+          <app-book-card [book]="asBook(fav)" />
+        </div>
+      }
+    </div>
+  }
+</div>
