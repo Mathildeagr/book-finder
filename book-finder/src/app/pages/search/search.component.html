@@ -1,0 +1,88 @@
+<div class="search-page">
+  <h2 class="fw-bold mb-4"><i class="bi bi-search me-2 text-primary"></i>Recherche de livres</h2>
+
+  <!-- Formulaire -->
+  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="mb-4">
+    <div class="row g-3 align-items-start">
+      <div class="col-md-9">
+        <div class="input-group input-group-lg">
+          <span class="input-group-text bg-white">
+            <i class="bi bi-search text-muted"></i>
+          </span>
+          <input
+            type="text"
+            formControlName="query"
+            class="form-control"
+            [class.is-invalid]="queryControl.invalid && queryControl.touched"
+            placeholder="Titre, auteur, ISBN..."
+          />
+          <div class="invalid-feedback">
+            @if (queryControl.hasError('required')) {
+              Le champ de recherche est requis.
+            } @else if (queryControl.hasError('minlength')) {
+              Veuillez saisir au moins 2 caractères.
+            }
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <button type="submit" class="btn btn-primary btn-lg w-100" [disabled]="isLoading">
+          @if (isLoading) {
+            <span class="spinner-border spinner-border-sm me-1"></span>
+          }
+          Rechercher
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- États -->
+  @if (isLoading) {
+    <app-loader />
+  } @else if (errorMessage) {
+    <app-error-message [message]="errorMessage" />
+  } @else if (hasSearched && books.length === 0) {
+    <div class="alert alert-info text-center">
+      <i class="bi bi-emoji-frown fs-3 d-block mb-2"></i>
+      Aucun livre trouvé. Essayez avec d'autres mots-clés.
+    </div>
+  } @else if (books.length > 0) {
+    <!-- Résultats -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <p class="text-muted mb-0">
+        <strong>{{ totalResults | number }}</strong> résultat(s) — page {{ currentPage }}/{{ totalPages }}
+      </p>
+    </div>
+
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 mb-4">
+      @for (book of books; track book.key) {
+        <div class="col">
+          <app-book-card [book]="book" />
+        </div>
+      }
+    </div>
+
+    <!-- Pagination -->
+    @if (totalPages > 1) {
+      <nav>
+        <ul class="pagination justify-content-center flex-wrap">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" (click)="goToPage(currentPage - 1)">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+          </li>
+          @for (page of pages; track page) {
+            <li class="page-item" [class.active]="page === currentPage">
+              <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
+            </li>
+          }
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button class="page-link" (click)="goToPage(currentPage + 1)">
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    }
+  }
+</div>
