@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center gap-2" routerLink="/">
+      <i class="bi bi-book-half fs-4"></i>
+      <span>BookFinder</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="bi bi-house me-1"></i>Accueil
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/search" routerLinkActive="active">
+            <i class="bi bi-search me-1"></i>Recherche
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link position-relative" routerLink="/favorites" routerLinkActive="active">
+            <i class="bi bi-star-fill me-1 text-warning"></i>Favoris
+            @if (favoritesService.count() > 0) {
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark" style="font-size: 0.65rem;">
+                {{ favoritesService.count() }}
+              </span>
+            }
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
