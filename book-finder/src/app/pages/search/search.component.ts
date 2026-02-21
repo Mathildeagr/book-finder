@@ -7,11 +7,12 @@ import { Book } from '../../models/book.model';
 import { BookCardComponent } from '../../shared/components/book-card/book-card.component';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
 import { ErrorMessageComponent } from '../../shared/components/error-message/error-message.component';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [ReactiveFormsModule, BookCardComponent, LoaderComponent, ErrorMessageComponent],
+  imports: [ReactiveFormsModule, BookCardComponent, LoaderComponent, ErrorMessageComponent, DecimalPipe],
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })

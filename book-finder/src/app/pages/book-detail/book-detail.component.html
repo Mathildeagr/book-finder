@@ -44,7 +44,7 @@
 
         @if (book.subjects?.length) {
           <div class="mb-3">
-            @for (subject of book.subjects.slice(0, 8); track subject) {
+            @for (subject of (book.subjects ?? []).slice(0, 8); track subject) {
               <span class="badge bg-primary me-1 mb-1">{{ subject }}</span>
             }
           </div>

@@ -18,6 +18,7 @@ export interface BookDetail {
   subjects?: string[];
   subject_places?: string[];
   subject_times?: string[];
+  covers?: number[];  
   created?: { value: string };
   authors?: { author: { key: string } }[];
 }
