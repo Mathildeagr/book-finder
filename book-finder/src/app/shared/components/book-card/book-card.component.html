@@ -6,7 +6,7 @@
         [alt]="book.title"
         class="card-img-top book-cover"
         loading="lazy"
-        (error)="$any($event.target).src='https://via.placeholder.com/200x300?text=No+Cover'"
+        (error)="$any($event.target).onerror=null; $any($event.target).src='assets/no-cover.png'"
       />
       <div class="cover-overlay">
         <span class="badge bg-primary">Voir le détail</span>

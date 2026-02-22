@@ -16,7 +16,7 @@
           [src]="coverUrl"
           [alt]="book.title"
           class="img-fluid rounded shadow mb-3 book-cover"
-          (error)="$any($event.target).src='assets/no-cover.png'"
+          (error)="$any($event.target).onerror=null; $any($event.target).src='assets/no-cover.png'"
         />
         <button
           class="btn w-100"
