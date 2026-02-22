@@ -1,59 +1,88 @@
 # BookFinder
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.2.
+Application front-end développée avec **Angular 18+**
 
-## Development server
+Elle permet de rechercher des livres, consulter leur détail et gérer une liste de favoris, en s'appuyant sur l'API publique [OpenLibrary](https://openlibrary.org).
 
-To start a local development server, run:
+---
+
+## Démarrage rapide
 
 ```bash
+# Installer les dépendances
+npm install
+
+# Lancer le serveur de développement
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+L'application est ensuite disponible sur **http://localhost:4200**
 
-## Code scaffolding
+> Aucune clé d'API requise — OpenLibrary est entièrement publique et gratuite.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
+## Fonctionnalités
+
+-  **Recherche de livres** avec formulaire réactif validé et pagination
+-  **Page de détail** avec description, auteurs et sujets
+-  **Gestion des favoris** persistés en localStorage
+-  **Guard Angular** sur la route `/favorites`
+-  **Page 404** personnalisée
+-  **Lazy loading** sur toutes les routes
+
+---
+
+## Architecture
+
+```
+src/app/
+├── core/
+│   ├── guards/          # FavoritesGuard
+│   └── services/        # BookService, FavoritesService
+├── models/              # Interfaces TypeScript
+├── pages/
+│   ├── home/
+│   ├── search/
+│   ├── book-detail/
+│   ├── favorites/
+│   └── not-found/
+└── shared/
+    ├── components/      # navbar, book-card, loader, error-message
+    └── pipes/           # truncate
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+##  Stack technique
 
-## Building
+| Technologie | Version |
+|---|---|
+| Angular | 18+ |
+| TypeScript | 5+ |
+| RxJS | 7+ |
+| Bootstrap | 5 |
+| Bootstrap Icons | 1+ |
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+##  API
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+**OpenLibrary** — https://openlibrary.org/developers/api
 
-## Running unit tests
+- Recherche : `GET /search.json?q=...`
+- Détail d'un livre : `GET /works/{id}.json`
+- Détail d'un auteur : `GET /authors/{id}.json`
+- Couvertures : `https://covers.openlibrary.org/b/id/{id}-M.jpg`
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Pistes d'améliorations
 
-```bash
-ng test
-```
+**Fonctionnalistés**
+- **Filtres avancés sur la recherche (langue, année de publication, type de média)**
+- **Système de notes ou commentaires personnels sur chaque livre favori**
+- **Page dédiée aux auteurs avec leur bibliographie complète**
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**UX / Design**
+- **Mode sombre**
+- **Animations de transition entre les pages plus élaborées**
+- **Vue liste / grille switchable sur les résultats**
