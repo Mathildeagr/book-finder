@@ -36,11 +36,17 @@ export class BookDetailComponent implements OnInit, OnDestroy {
   get coverUrl(): string {
     return this.coverId
       ? this.bookService.getCoverUrl(this.coverId, 'L')
-      : 'assets/no-cover.png';
+      : 'no-cover.png';
   }
 
   get isFavorite(): boolean {
     return this.favoritesService.isFavorite(`/works/${this.workId}`);
+  }
+
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.onerror = null;
+    img.src = 'no-cover.png';
   }
 
   ngOnInit(): void {

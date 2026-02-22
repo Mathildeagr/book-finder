@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil, debounceTime, distinctUntilChanged } from 'rxjs';
@@ -21,6 +21,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   private bookService = inject(BookService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
 
   searchForm!: FormGroup;
@@ -85,10 +86,12 @@ export class SearchComponent implements OnInit, OnDestroy {
           this.books = res.docs;
           this.totalResults = res.numFound;
           this.isLoading = false;
+          this.cdr.detectChanges();
         },
         error: (err) => {
           this.errorMessage = err.message;
           this.isLoading = false;
+          this.cdr.detectChanges();  
         }
       });
   }

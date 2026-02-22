@@ -24,11 +24,17 @@ export class BookCardComponent {
   get coverUrl(): string {
     return this.book.cover_i
       ? `https://covers.openlibrary.org/b/id/${this.book.cover_i}-M.jpg`
-      : 'assets/no-cover.png';
+      : 'no-cover.png';
   }
 
   get workId(): string {
     return this.book.key.replace('/works/', '');
+  }
+
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.onerror = null;
+    img.src = 'no-cover.png';
   }
 
   toggleFavorite(event: Event): void {
