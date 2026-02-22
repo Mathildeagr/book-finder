@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subject, takeUntil, switchMap, forkJoin, of, catchError } from 'rxjs';
 import { BookService } from '../../core/services/book.service';
@@ -18,6 +18,7 @@ export class BookDetailComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private bookService = inject(BookService);
   favoritesService = inject(FavoritesService);
+  private cdr = inject(ChangeDetectorRef); 
   private destroy$ = new Subject<void>();
 
   book: BookDetail | null = null;
@@ -78,11 +79,13 @@ export class BookDetailComponent implements OnInit, OnDestroy {
         if (book) {
           this.authors = authors;
           this.isLoading = false;
+          this.cdr.detectChanges();
         }
       },
       error: (err) => {
         this.errorMessage = err.message;
         this.isLoading = false;
+        this.cdr.detectChanges();
       }
     });
   }
